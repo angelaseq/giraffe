@@ -1,0 +1,1 @@
+sniffles --reference reference.fasta -i mapped_input.bam -v output.vcf
