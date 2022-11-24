@@ -1,0 +1,10 @@
+odgi chop -c 256 -i graph.og -o graph.chop.og
+odgi view -i graph.chop.og -g > graph.chop.gfa
+vg autoindex -g graph.chop.gfa -t 30 -p graph.chop.autoindex.gfa
+vg gbwt -x graph.chop.autoindex.gfa.xg --index-paths -o graph.gbwt
+vg giraffe -x graph.chop.autoindex.gfa.xg -H graph.gbwt -f reads.fq > mapped.gam
+vg convert graph.chop.autoindex.gfa.xg -p > graph.pg
+vg augment graph.pg mapped.gam -m 2 -q 3 -Q 3 -A mapped.aug.gam > mapped.aug.pg
+vg snarls mapped.aug.pg > mapped.aug.snarls
+vg pack -x mapped.aug.pg -g mapped.aug.gam -o mapped.aug.pack
+vg call mapped.aug.pg -r mapped.aug.snarls -k mapped.aug.pack > output.vcf
