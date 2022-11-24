@@ -1,0 +1,1 @@
+delly call -g reference.fa input.bam > output.vcf
